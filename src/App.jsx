@@ -1,44 +1,31 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useState, useEffect, useContext } from 'react'
+import { context } from './hooks/UserContext.jsx'
+import './styles/App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import Header from './components/Header'
+import ToggleForms from './components/ToggleForms'
+import Cards from './components/Cards'
 
+function App () {
+  const [isLogged, setIsLogged] = useState(false)
+  const userContext = useContext(context)
+  console.log(userContext, 'Desde app')
+  if (userContext.user.data) {
+    console.log(userContext.user.data, 'Hay Usuario')
+  }
+
+  useEffect(() => {
+    console.log(userContext, 'Efecto app')
+  }, [userContext])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+        <Header isLogged={isLogged} />
+        {isLogged
+          ? <Cards/>
+          : <ToggleForms />
+        }
+        <button onClick={() => setIsLogged(!isLogged)}>log</button>
+    </>
   )
 }
 
