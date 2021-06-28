@@ -1,31 +1,40 @@
 import axios from 'axios'
+// const API_URL = 'https://onegroup-app-api.herokuapp.com/api/articles'
 const API_URL = 'http://localhost:3001/api/articles'
 
 class Articles {
   constructor (API_URL) {
     this.API_URL = API_URL
-    this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQ3OWQ1MzEwMzk0ZDJkMWVlODcwNGYiLCJlbWFpbCI6Impvc2VAdGVzdC5jb20iLCJpYXQiOjE2MjQ3NDQ1MTZ9.ghw-OsvrvO9DFAvaBJtXtJ7G9kU2645ukxxQfg64qWg'
-    this.axiosConfig = {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    }
+    this.token = ''
+  }
+
+  setToken () {
+    const user = localStorage.getItem('user')
+    const userParsed = JSON.parse(user)
+    this.token = userParsed.token
   }
 
   async getAll () {
     try {
-      const { data: articles } = await axios.get(this.API_URL, this.axiosConfig)
+      const { data: articles } = await axios.get(this.API_URL, {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })
       return articles
     } catch (error) {
       console.log(error)
     }
   }
 
-  async create ({ title, description, rating, price }) {
+  async create (formData) {
     try {
-      const { data: createdArticle } = await axios.post(this.API_URL, {
-        title, description, rating, price
-      }, this.axiosConfig)
+      const { data: createdArticle } = await axios.post(
+        this.API_URL, formData, {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
 
       return createdArticle
     } catch (error) {
@@ -35,7 +44,12 @@ class Articles {
 
   async delete (id) {
     try {
-      const { data: deletedArticle } = await axios.delete(`${this.API_URL}/${id}`, this.axiosConfig)
+      const { data: deletedArticle } = await axios.delete(
+        `${this.API_URL}/${id}`, {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
       return deletedArticle
     } catch (error) {
       console.log(error)
@@ -44,7 +58,12 @@ class Articles {
 
   async update (id, propsToUpdate) {
     try {
-      const { data: updatedArticle } = await axios.put(`${this.API_URL}/${id}`, { ...propsToUpdate }, this.axiosConfig)
+      const { data: updatedArticle } = await axios.put(
+        `${this.API_URL}/${id}`, { ...propsToUpdate }, {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
       return updatedArticle
     } catch (error) {
       console.log(error)

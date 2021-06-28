@@ -2,18 +2,30 @@ import React from 'react'
 import '../styles/Input.css'
 import PropTypes from 'prop-types'
 
-const Input = ({ image, placeholder, type, value, onChangeHandle, name }) => {
+const Input = (props) => {
+  const {
+    image,
+    placeholder,
+    type,
+    value,
+    onChangeHandle,
+    name,
+    validateHandle
+  } = props
+
   return (
-    <div className="input">
+    <div className='input'>
       <img className="input__img" src={image} alt="" />
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         name={name}
-        onChange={onChangeHandle}>
+        onChange={onChangeHandle}
+        onKeyUp={validateHandle}
+        >
       </input>
-  </div>
+    </div>
   )
 }
 
@@ -23,6 +35,7 @@ Input.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
   onChangeHandle: PropTypes.func,
+  validateHandle: PropTypes.func,
   name: PropTypes.string
 }
 

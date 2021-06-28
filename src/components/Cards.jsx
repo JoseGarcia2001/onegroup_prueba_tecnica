@@ -1,43 +1,40 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import CardItem from './CardItem'
-// import { initArticles } from '../hooks/initArticles'
+import Spinner from './Spinner'
 
-import Articles from '../services/Articles'
-
+// const API_URL = 'https://onegroup-app-api.herokuapp.com'
 const API_URL = 'http://localhost:3001'
 
 const Cards = () => {
   const [loading, setLoading] = useState(true)
-  const [articles, setArticles] = useState([])
+  const articles = useSelector(state => state)
 
-  useEffect(() => {
-    setLoading(true)
-    Articles.getAll()
-      .then((articles) => {
-        setArticles(articles)
-        setLoading(false)
-      })
-      .catch(error => console.log(error))
+  useEffect(async () => {
+    try {
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   return (
-    <main>
+    <>
         <div className="cards">
           {
             loading
-              ? <h1>Loading...</h1>
-              : articles.map(({ _id, title, price, image, description, rating }) =>
+              ? <Spinner />
+              : articles.map(({ _id, title, price, image, rating }) =>
               <CardItem
                 key={_id}
                 title={title}
                 price={price}
                 image={`${API_URL}${image}`}
-                description={description}
                 rating={rating}
               />)
           }
         </div>
-      </main>
+      </>
   )
 }
 

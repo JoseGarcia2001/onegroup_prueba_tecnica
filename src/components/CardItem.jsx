@@ -4,13 +4,13 @@ import configImage from '../assets/images/Icons/config.svg'
 import PropTypes from 'prop-types'
 import '../styles/cardItem.css'
 
-const CardItem = ({ title, price, image, rating, description }) => {
+const CardItem = ({ title, price, image, rating }) => {
   return (
   <div className="cards__item" style={{}}>
     <img
       className="cards__item-image"
       src={image}
-      alt={description}>
+      alt={title}>
     </img>
     <div className="card__info">
       <p className="card__info-title">{title}</p>
@@ -37,7 +37,6 @@ const CardItem = ({ title, price, image, rating, description }) => {
 CardItem.propTypes = {
   title: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string
 }
