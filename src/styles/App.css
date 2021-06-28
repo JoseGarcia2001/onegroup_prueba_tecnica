@@ -66,20 +66,11 @@
 }
 
 main {
+  margin: 0 auto;
   font-family: 'DM Sans', sans-serif;
   padding-bottom: 60px;
   height: 100%;
-}
-
-.cards {
-  margin: 0 auto;
   max-width: 1024px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 240px));
-  gap: 10px;
-  justify-content: center;
-  justify-items: center;
-  row-gap: 35px;
 }
 
 .main__manage-articles {
@@ -93,4 +84,10 @@ main {
 .main__manage-articles button {
   width: 150px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 340px) {
+  .header__user-avatar {
+    display: none;
+  }
 }

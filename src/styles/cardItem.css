@@ -1,3 +1,20 @@
+.cards-container {
+  width: 100%;
+  display: grid;
+}
+
+.cards {
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 240px));
+  gap: 10px;
+  justify-content: center;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 35px;
+}
+
 .cards__item {
   position: relative;
   background-color: white;
@@ -7,24 +24,33 @@
   width: 215px;
 }
 
-/* .cards__item::before {
-  z-index: 3;
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background:rgba(0, 0, 0, 0.51);
-  border-radius: 15px;
-  display: block;
-} */
-
 .cards__item-image {
   width: 100%;
   height: 143px;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.cards__pagination {
+  display: flex;
+  gap: 15px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.cards__pagination button {
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+.cards__pagination p {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .card__info-title {
@@ -37,6 +63,7 @@
 }
 
 .card__specialInfo {
+  position: relative;
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -53,6 +80,36 @@
 }
 
 .card__specialInfo-setting {
+  width: 10px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.51);
 }
+
+.card__modal {
+  z-index: 1;
+  border: 1px solid black;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  bottom: 3px;
+  right: 13px;
+  position: absolute;
+  width: 160px;
+  border-bottom: none;
+}
+
+.card__modal button {
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.card__modal button:hover {
+  background: #ecebeb;
+}
+

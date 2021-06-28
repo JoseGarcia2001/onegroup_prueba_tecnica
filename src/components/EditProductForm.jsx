@@ -1,72 +1,55 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import closeIcon from '../assets/images/Icons/close.svg'
-import { useDispatch } from 'react-redux'
-import { createArticle } from '../reducers/articlesReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateArticle } from '../reducers/articlesReducer'
 
-const CreateProductForm = ({ handleClose }) => {
-  const [name, setName] = useState()
-  const [price, setPrice] = useState()
-  const [score, setScore] = useState()
-  const [file, setFile] = useState()
+const EditProductForm = ({ handleClose, id, handleCloseOnSend }) => {
+  const itemToEdit = useSelector(state => state.find(item => item._id === id))
+
+  const [title, setName] = useState(itemToEdit.title)
+  const [price, setPrice] = useState(itemToEdit.price)
+  const [rating, setScore] = useState(itemToEdit.rating)
   const [error, setError] = useState('')
   const dispatch = useDispatch()
 
-  const handleInputFile = (event) => {
-    setFile(event.target.files[0])
-  }
-
-  const handleSubmit = async (event) => {
+  const handleUpdate = async (event) => {
     try {
       event.preventDefault()
 
-      if (!name || !price || !score || !file) {
+      if (!title || !price || !rating) {
         return setError('Complete the fields')
       }
 
-      const articleData = new FormData()
+      const propsToUpdate = {
+        title,
+        price,
+        rating
+      }
 
-      articleData.append('image', file)
-      articleData.append('title', name)
-      articleData.append('price', price)
-      articleData.append('rating', score)
-
-      dispatch(createArticle(articleData))
+      dispatch(updateArticle(id, propsToUpdate))
 
       handleClose()
+      handleCloseOnSend()
       setError('')
     } catch (error) {
       console.log(error)
     }
   }
-
   return (
     <div className={'create-form'}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleUpdate}>
         <button
           type="button"
           onClick={handleClose}
-          onBlur={handleClose}
           className="form__button--close">
           <img src={closeIcon}></img>
         </button>
-        <h3>Create product</h3>
-        <label>
-          <span>Attach the image</span><br/>
-          <small style={{ color: 'gray' }}>
-          (The file name must not contain spaces)
-          </small>
-          <input
-          name="image"
-          type='file'
-          accept=".jpg, .jpeg, .png"
-          onChange={handleInputFile}
-          >
-          </input>
-        </label>
+        <h3>Edit product</h3>
         <label>
           <span>Product name</span>
           <input
+            value={title}
             className="form__input"
             placeholder="Name"
             onChange={({ target }) => setName(target.value)}
@@ -76,6 +59,7 @@ const CreateProductForm = ({ handleClose }) => {
         <label>
           <span>Product price</span>
           <input
+            value={price}
             className="form__input"
             placeholder="Price"
             onChange={({ target }) => setPrice(target.value)}
@@ -85,6 +69,7 @@ const CreateProductForm = ({ handleClose }) => {
         <label>
           <span>Product score</span>
           <input
+            value={rating}
             className="form__input"
             placeholder="Score"
             type="number"
@@ -97,15 +82,17 @@ const CreateProductForm = ({ handleClose }) => {
         </label>
         <span className="form__error">{error}</span>
         <button className="form__button">
-          Create article
+          Send changes
         </button>
       </form>
     </div>
   )
 }
 
-CreateProductForm.propTypes = {
-  handleClose: PropTypes.func
+EditProductForm.propTypes = {
+  id: PropTypes.string,
+  handleClose: PropTypes.func,
+  handleCloseOnSend: PropTypes.func
 }
 
-export default CreateProductForm
+export default EditProductForm

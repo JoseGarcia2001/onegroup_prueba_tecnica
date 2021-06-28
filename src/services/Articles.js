@@ -1,6 +1,6 @@
 import axios from 'axios'
-// const API_URL = 'https://onegroup-app-api.herokuapp.com/api/articles'
-const API_URL = 'http://localhost:3001/api/articles'
+const API_URL = 'https://onegroup-app-api.herokuapp.com/api/articles'
+// const API_URL = 'http://localhost:3001/api/articles'
 
 class Articles {
   constructor (API_URL) {

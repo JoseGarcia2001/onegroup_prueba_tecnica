@@ -20,7 +20,6 @@ const LoginForm = () => {
     if (user) {
       setLocation('/')
     }
-
     setLoading(false)
   }, [])
 

@@ -62,10 +62,12 @@ form {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.616);
-  z-index: 1;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  left: 0;
+
 }
 
 .create-form form {
@@ -110,14 +112,17 @@ input[type="file"] {
   font-weight: bold;
 }
 
-.form__button--close {
+.form__button--close, .card__specialInfo-setting {
   background: none;
   outline: none;
-  border: none;
+  border: none; 
+  cursor: pointer;
+}
+
+.form__button--close {
   position: absolute;
   top: 20px;
   right: 30px;
-  cursor: pointer;
 }
 
 .form__button--close img {
