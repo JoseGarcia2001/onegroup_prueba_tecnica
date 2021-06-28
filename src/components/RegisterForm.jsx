@@ -50,7 +50,7 @@ const RegisterForm = () => {
         ? <Spinner />
         : (
           <div className="form">
-            <h2 className="form__title">Register 🤟</h2>
+            <h2 className="form__title">Register</h2>
             <form onSubmit={handleSubmit}>
               <div className="form__fields">
                 <Input

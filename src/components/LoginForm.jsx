@@ -57,7 +57,7 @@ const LoginForm = () => {
           ? <Spinner />
           : (
             <div className="form">
-              <h2 className="form__title">Login 😎</h2>
+              <h2 className="form__title">Login</h2>
               <form onSubmit={handleSubmit}>
                 <div className="form__fields">
                   <Input
