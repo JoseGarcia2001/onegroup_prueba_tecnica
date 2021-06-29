@@ -24,4 +24,4 @@ npm i
 npm run dev
 ```
 
-| WEB Desplegada en | https://60da4f175f136d2618a4c4b1--keen-poitras-d1f604.netlify.app/ |
+| WEB Desplegada en | onegroup-app.netlify.app |
