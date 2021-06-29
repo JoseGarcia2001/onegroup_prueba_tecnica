@@ -24,4 +24,4 @@ npm i
 npm run dev
 ```
 
-| WEB Desplegada en | onegroup-app.netlify.app |
+| WEB Desplegada en | https://onegroup-app.netlify.app |
