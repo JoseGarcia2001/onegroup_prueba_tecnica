@@ -1,8 +1,9 @@
-import React from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-const Pagination = () => {
+export const handlePagination = () => {
   const [page, setPage] = useState(0)
-  const pageLength = 6
+  const pageLength = 8
   const results = page + pageLength
   const articles = useSelector(state => state)
   const numOfPages = Math.ceil(articles.length / pageLength)
@@ -17,23 +18,12 @@ const Pagination = () => {
   }
 
   const handlePrev = () => {
-    if (page === 4) {
+    if (page === 0) {
       setPage(maxPage)
     } else {
       setPage(page - pageLength)
     }
   }
 
-  return (
-    <div className="cards__pagination">
-      <button
-        className="cards__pagination--prev"
-        onClick={handlePrev}>prev</button>
-      <button
-        className="cards__pagination--next"
-        onClick={handleNext}>next</button>
-    </div>
-  )
+  return { handleNext, handlePrev, results, page, articles, pageLength }
 }
-
-export default Pagination

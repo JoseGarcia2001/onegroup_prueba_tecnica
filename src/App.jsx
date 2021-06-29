@@ -3,9 +3,9 @@ import { Route } from 'wouter'
 import './styles/App.css'
 
 import Header from './components/Header'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
-import Main from './components/Main'
+import LoginForm from './pages/LoginForm'
+import RegisterForm from './pages/RegisterForm'
+import Main from './pages/Main'
 
 function App () {
   return (

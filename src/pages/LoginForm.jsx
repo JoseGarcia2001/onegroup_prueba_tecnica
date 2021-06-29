@@ -1,55 +1,44 @@
-import React, { useState, useEffect } from 'react'
-import Spinner from './Spinner'
+import React, { useState } from 'react'
+import Spinner from '../components/Spinner'
 import emailIcon from '../assets/images/Icons/mail.svg'
 import lockIcon from '../assets/images/Icons/lock.svg'
-import Input from './Input'
+import Input from '../components/Input'
 import { useLocation } from 'wouter'
 import '../styles/Form.css'
 import { login } from '../services/Users'
 import articles from '../services/Articles'
+import { handleForm } from '../hooks/handleForm'
+import { existUserValidate } from '../hooks/existUserValidate'
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [location, setLocation] = useLocation()
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
+  const [location, setLocation] = useLocation()
 
-  useEffect(() => {
-    const user = localStorage.getItem('user')
-    if (user) {
-      setLocation('/')
-    }
-    setLoading(false)
-  }, [])
+  existUserValidate('/', setLoading)
 
-  const validateInput = () => {
-    if (!email) return setError('Email required')
-    setError('')
-
-    if (!password) return setError('Password required')
-    setError('')
+  const onSendAction = async () => {
+    const user = await login(email, password)
+    localStorage.setItem('user', JSON.stringify(user))
+    articles.setToken()
+    setLocation('/')
   }
 
-  const handleSubmit = async (event) => {
-    try {
-      event.preventDefault()
+  const {
+    validateInput,
+    handleSubmit,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error
+  } = handleForm(setLoading, onSendAction)
 
-      if (error || !email || !password) {
-        return setError('Complete the fields')
-      }
-
-      const user = await login(email, password)
-      localStorage.setItem('user', JSON.stringify(user))
-      articles.setToken()
-      setLocation('/')
-    } catch (error) {
-      setError('Email and password do not match')
-      setEmail('')
-      setPassword('')
-      console.log(error)
-    }
+  const toggleForm = (event) => {
+    event.preventDefault()
+    console.log(`Redirected from ${location}`)
+    setLocation('/register')
   }
+
   return (
     <>
       {
@@ -83,11 +72,7 @@ const LoginForm = () => {
                 <button className="form__button">Sign In</button>
                 <button
                   className="form__description"
-                  onClick={(event) => {
-                    event.preventDefault()
-                    console.log(`Redirected from ${location}`)
-                    setLocation('/register')
-                  }}
+                  onClick={toggleForm}
                 >
                 Sign Up here
                 </button>

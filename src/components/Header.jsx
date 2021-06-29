@@ -11,12 +11,9 @@ const Header = () => {
 
   useEffect(() => {
     const user = localStorage.getItem('user')
-
-    if (!user) {
-      return setIsLogged(false)
-    }
-
-    setIsLogged(true)
+    user
+      ? setIsLogged(true)
+      : setIsLogged(false)
   })
 
   const handleLogout = () => {
